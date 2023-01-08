@@ -4,12 +4,11 @@ import com.predictor.fetcher.domain.ports.PriceDto;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.predictor.common.CurrencyPairKey.BTCUSDT;
+import static com.predictor.common.CurrencyPair.BTCUSDT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PriceFacadeTest {
@@ -24,9 +23,9 @@ public class PriceFacadeTest {
         final PriceFacade facade = preparePriceFacade(queue);
 
         //when
-        facade.sendActualPriceToProcess(BTCUSDT);
-        facade.sendActualPriceToProcess(BTCUSDT);
-        facade.sendActualPriceToProcess(BTCUSDT);
+        facade.sendActualPriceToProcess(BTCUSDT, "topicName");
+        facade.sendActualPriceToProcess(BTCUSDT, "topicName");
+        facade.sendActualPriceToProcess(BTCUSDT, "topicName");
 
 
         //then
@@ -37,9 +36,9 @@ public class PriceFacadeTest {
 
     @NotNull
     private static List<PriceDto> getExpectedPrices() {
-        final PriceDto expectedPrice1 = Price.of(PRICE1).mapToDto();
-        final PriceDto expectedPrice2 = Price.of(PRICE2).mapToDto();
-        final PriceDto expectedPrice3 = Price.of(PRICE3).mapToDto();
+        final PriceDto expectedPrice1 = Price.of(PRICE1, BTCUSDT).mapToDto();
+        final PriceDto expectedPrice2 = Price.of(PRICE2, BTCUSDT).mapToDto();
+        final PriceDto expectedPrice3 = Price.of(PRICE3, BTCUSDT).mapToDto();
 
         return Arrays.asList(expectedPrice1, expectedPrice2, expectedPrice3);
     }

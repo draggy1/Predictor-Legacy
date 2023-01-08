@@ -3,7 +3,7 @@ package com.predictor.fetcher.adapters;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.market.TickerStatistics;
 import com.binance.api.client.exception.BinanceApiException;
-import com.predictor.common.CurrencyPairKey;
+import com.predictor.common.CurrencyPair;
 import com.predictor.config.BinanceClientProvider;
 import com.predictor.fetcher.domain.ports.PriceClient;
 
@@ -18,7 +18,7 @@ public class BinancePriceClient implements PriceClient {
     }
 
     @Override
-    public String getActualPrice(CurrencyPairKey pairKey) {
+    public String getActualPrice(CurrencyPair pairKey) {
         final String currencyPairKey = pairKey.getKey();
         try {
             final TickerStatistics tickerStatistics = client.get24HrPriceStatistics(currencyPairKey);

@@ -9,11 +9,8 @@ public class InMemoryPriceRepositoryTemporary implements PriceRepository {
     private final ArrayDeque<PriceDto> queue = new ArrayDeque<>();
 
     @Override
-    public void push(PriceDto price) {
+    public void push(PriceDto price, String topicName) {
         queue.push(price);
     }
 
-    public PriceDto getLast() {
-        return queue.peek();
-    }
 }

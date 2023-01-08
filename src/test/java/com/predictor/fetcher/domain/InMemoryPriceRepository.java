@@ -9,7 +9,7 @@ public class InMemoryPriceRepository implements PriceRepository {
     private final ArrayDeque<PriceDto> queue = new ArrayDeque<>();
 
     @Override
-    public void push(PriceDto price) {
+    public void push(PriceDto price, String topicName) {
         queue.push(price);
     }
 

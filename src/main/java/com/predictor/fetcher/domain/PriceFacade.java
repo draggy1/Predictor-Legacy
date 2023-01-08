@@ -1,17 +1,22 @@
 package com.predictor.fetcher.domain;
 
-import com.predictor.common.CurrencyPairKey;
+import com.predictor.common.CurrencyPair;
+import com.predictor.config.kafka.KafkaProducerConfig;
 import com.predictor.fetcher.adapters.BinancePriceClient;
-import com.predictor.fetcher.adapters.InMemoryPriceRepositoryTemporary;
+import com.predictor.fetcher.adapters.KafkaRepository;
 import com.predictor.fetcher.domain.ports.PriceClient;
 import com.predictor.fetcher.domain.ports.PriceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PriceFacade {
-    final PriceService priceService;
+    private final PriceService priceService;
 
-    public PriceFacade() {
+    @Autowired
+    public PriceFacade(KafkaProducerConfig producerConfig) {
         final PriceClient client = new BinancePriceClient();
-        final PriceRepository repository = new InMemoryPriceRepositoryTemporary();
+        final PriceRepository repository = new KafkaRepository(producerConfig.kafkaTemplate());
         priceService = new PriceService(client, repository);
     }
 
@@ -19,8 +24,8 @@ public class PriceFacade {
         this.priceService = new PriceService(client, repository);
     }
 
-    public void sendActualPriceToProcess(CurrencyPairKey pairKey){
+    public void sendActualPriceToProcess(CurrencyPair pairKey, String topicName) {
         final Price price = priceService.fetchPrice(pairKey);
-        priceService.pushPriceToQueue(price);
+        priceService.pushPriceToQueue(price, topicName);
     }
 }

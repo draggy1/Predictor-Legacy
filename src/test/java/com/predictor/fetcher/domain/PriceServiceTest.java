@@ -1,5 +1,6 @@
 package com.predictor.fetcher.domain;
 
+import com.predictor.common.CurrencyPair;
 import com.predictor.fetcher.domain.ports.PriceClient;
 import com.predictor.fetcher.domain.ports.PriceRepository;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +14,7 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.predictor.common.CurrencyPairKey.BTCUSDT;
+import static com.predictor.common.CurrencyPair.BTCUSDT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -25,7 +26,7 @@ public class PriceServiceTest {
         final PriceClient client = new InMemoryCorrectPriceClient(List.of("21245.5300000"));
         final PriceRepository repository = new InMemoryPriceRepository();
         final PriceService service = new PriceService(client, repository);
-        final Price expectedPrice = prepareExpectedPrice("21245.53");
+        final Price expectedPrice = prepareExpectedPrice("21245.53", BTCUSDT);
 
         //when
         final Price price = service.fetchPrice(BTCUSDT);
@@ -40,7 +41,7 @@ public class PriceServiceTest {
         final PriceClient client = new InMemoryCorrectPriceClient(List.of("21245.53999999"));
         final PriceRepository repository = new InMemoryPriceRepository();
         final PriceService service = new PriceService(client, repository);
-        final Price expectedPrice = prepareExpectedPrice("21245.54");
+        final Price expectedPrice = prepareExpectedPrice("21245.54", BTCUSDT);
 
         //when
         final Price price = service.fetchPrice(BTCUSDT);
@@ -80,7 +81,7 @@ public class PriceServiceTest {
     }
 
     @NotNull
-    private static Price prepareExpectedPrice(String expectedPrice) {
-        return new Price(new BigDecimal(expectedPrice).setScale(2, RoundingMode.HALF_UP));
+    private static Price prepareExpectedPrice(String expectedPrice, CurrencyPair pair) {
+        return new Price(new BigDecimal(expectedPrice).setScale(2, RoundingMode.HALF_UP), pair);
     }
 }

@@ -1,14 +1,15 @@
 package com.predictor.common;
 
-public enum CurrencyPairKey {
-    BTCUSDT("BTCUSDT");
+public enum CurrencyPair {
+    BTCUSDT("BTCUSDT"),
+    NONE("None");
     private final String key;
 
     public String getKey() {
         return key;
     }
 
-    CurrencyPairKey(String key) {
+    CurrencyPair(String key) {
         this.key = key;
     }
 }

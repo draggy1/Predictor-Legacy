@@ -1,6 +1,6 @@
 package com.predictor.fetcher.domain;
 
-import com.predictor.common.CurrencyPairKey;
+import com.predictor.common.CurrencyPair;
 import com.predictor.fetcher.domain.ports.PriceClient;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ public class InMemoryCorrectPriceClient implements PriceClient {
     }
 
     @Override
-    public String getActualPrice(CurrencyPairKey currencyPairKey) {
+    public String getActualPrice(CurrencyPair currencyPair) {
         return returnedPrice.size() > 0 ? getAndRemove() : BigDecimal.ZERO.toString();
     }
 

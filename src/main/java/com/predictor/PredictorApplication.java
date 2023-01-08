@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class PredictorApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(PredictorApplication.class, args);
     }

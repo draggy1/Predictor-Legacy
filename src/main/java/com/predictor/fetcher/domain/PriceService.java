@@ -1,6 +1,6 @@
 package com.predictor.fetcher.domain;
 
-import com.predictor.common.CurrencyPairKey;
+import com.predictor.common.CurrencyPair;
 import com.predictor.fetcher.domain.ports.PriceClient;
 import com.predictor.fetcher.domain.ports.PriceRepository;
 
@@ -13,12 +13,12 @@ class PriceService {
        this.repository = repository;
     }
 
-    Price fetchPrice(CurrencyPairKey pairKey){
+    Price fetchPrice(CurrencyPair pairKey){
         final String actualPrice = client.getActualPrice(pairKey);
-        return Price.of(actualPrice);
+        return Price.of(actualPrice, pairKey);
     }
 
-    void pushPriceToQueue(Price price){
-        repository.push(price.mapToDto());
+    void pushPriceToQueue(Price price, String topicName){
+        repository.push(price.mapToDto(), topicName);
     }
 }
