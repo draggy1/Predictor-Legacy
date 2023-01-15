@@ -16,7 +16,7 @@ public class PriceFacade {
     @Autowired
     public PriceFacade(KafkaProducerConfig producerConfig) {
         final PriceClient client = new BinancePriceClient();
-        final PriceRepository repository = new KafkaRepository(producerConfig.kafkaTemplate());
+        final PriceRepository repository = new KafkaRepository(producerConfig.priceKafkaTemplate());
         priceService = new PriceService(client, repository);
     }
 

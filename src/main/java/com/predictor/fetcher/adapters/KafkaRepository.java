@@ -7,16 +7,16 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 public class KafkaRepository implements PriceRepository {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, PriceDto> kafkaTemplate;
 
     @Autowired
-    public KafkaRepository(KafkaTemplate<String, String> kafkaTemplate) {
+    public KafkaRepository(KafkaTemplate<String, PriceDto> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
 
     }
 
     @Override
     public void push(PriceDto price, String topicName) {
-        kafkaTemplate.send(topicName, price.toString());
+        kafkaTemplate.send(topicName, price);
     }
 }

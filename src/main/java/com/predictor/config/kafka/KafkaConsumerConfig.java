@@ -1,5 +1,6 @@
 package com.predictor.config.kafka;
 
+import com.predictor.fetcher.domain.ports.PriceDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,21 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        return factory;
+    }
+
+    public ConsumerFactory<String, PriceDto> greetingConsumerFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(PriceDto.class));
+    }
+
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, PriceDto> greetingKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, PriceDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(greetingConsumerFactory());
         return factory;
     }
 }
