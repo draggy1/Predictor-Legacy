@@ -43,14 +43,13 @@ public class KafkaConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
-    public ConsumerFactory<String, PriceDto> greetingConsumerFactory() {
+    public ConsumerFactory<String, PriceDto> priceConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -59,9 +58,9 @@ public class KafkaConsumerConfig {
 
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PriceDto> greetingKafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, PriceDto> priceKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, PriceDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(greetingConsumerFactory());
+        factory.setConsumerFactory(priceConsumerFactory());
         return factory;
     }
 }

@@ -9,7 +9,7 @@ public class TestConsumer {
 
     @KafkaListener(
             topics = "BTCUSDT-BINANCE",
-            containerFactory = "greetingKafkaListenerContainerFactory")
+            containerFactory = "priceKafkaListenerContainerFactory")
     public void greetingListener(PriceDto price) {
         System.out.println("Consumer: " + price);
     }

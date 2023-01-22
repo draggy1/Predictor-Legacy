@@ -19,6 +19,6 @@ class PriceService {
     }
 
     void pushPriceToQueue(Price price, String topicName){
-        repository.push(price.mapToDto(), topicName);
+        repository.push(price.dto(), topicName);
     }
 }

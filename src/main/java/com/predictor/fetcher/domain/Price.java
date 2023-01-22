@@ -24,7 +24,7 @@ record Price(BigDecimal priceValue, CurrencyPair pair) {
         return new Price(ZERO, NONE);
     }
 
-    PriceDto mapToDto() {
+    PriceDto dto() {
         return new PriceDto(priceValue, pair);
     }
 
