@@ -23,7 +23,7 @@ public class PriceServiceTest {
     @Test
     public void correctPriceIsFetchedSuccessfully() {
         //given
-        final PriceClient client = new InMemoryCorrectPriceClient(List.of("21245.5300000"));
+        final PriceClient client = new BinanceTestPriceClient(List.of("21245.5300000"));
         final PriceRepository repository = new InMemoryPriceRepository();
         final PriceService service = new PriceService(client, repository);
         final Price expectedPrice = prepareExpectedPrice("21245.53", BTCUSDT);
@@ -38,7 +38,7 @@ public class PriceServiceTest {
     @Test
    public void correctPriceRoundedHalfUpIsFetchedSuccessfully() {
         //given
-        final PriceClient client = new InMemoryCorrectPriceClient(List.of("21245.53999999"));
+        final PriceClient client = new BinanceTestPriceClient(List.of("21245.53999999"));
         final PriceRepository repository = new InMemoryPriceRepository();
         final PriceService service = new PriceService(client, repository);
         final Price expectedPrice = prepareExpectedPrice("21245.54", BTCUSDT);
@@ -54,7 +54,7 @@ public class PriceServiceTest {
     @MethodSource("prices")
     void inCorrectPriceFromApiShouldBeTreatedAsZero(List<String> priceValues) {
         //given
-        final PriceClient client = new InMemoryCorrectPriceClient(priceValues);
+        final PriceClient client = new BinanceTestPriceClient(priceValues);
         final PriceRepository repository = new InMemoryPriceRepository();
         final PriceService service = new PriceService(client, repository);
         final Price expectedPrice = Price.zero();

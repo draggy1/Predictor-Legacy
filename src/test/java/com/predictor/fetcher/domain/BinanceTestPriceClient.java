@@ -7,16 +7,20 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InMemoryCorrectPriceClient implements PriceClient {
+public class BinanceTestPriceClient implements PriceClient {
     private final LinkedList<String> returnedPrice;
 
-    public InMemoryCorrectPriceClient(List<String> returnedPrice) {
+    public BinanceTestPriceClient(List<String> returnedPrice) {
         this.returnedPrice = new LinkedList<>(returnedPrice);
     }
 
     @Override
     public String getActualPrice(CurrencyPair currencyPair) {
         return returnedPrice.size() > 0 ? getAndRemove() : BigDecimal.ZERO.toString();
+    }
+
+    public void addPrices(List<String> prices) {
+        returnedPrice.addAll(prices);
     }
 
     private String getAndRemove() {

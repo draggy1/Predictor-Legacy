@@ -1,0 +1,12 @@
+binance_api:
+    secret: "dupa"
+    key: "biskupa"
+spring:
+    kafka:
+        bootstrap-servers: "localhost:29092"
+        topic-1: "BTCUSDT-BINANCE"
+        consumer:
+            auto-offset-reset: earliest
+            group-id: "group1"
+        listener:
+            concurrency: 1

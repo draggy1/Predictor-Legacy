@@ -45,6 +45,6 @@ public class PriceFacadeTest {
 
     @NotNull
     private static PriceFacade preparePriceFacade(InMemoryPriceRepository queue) {
-        return new PriceFacade(new InMemoryCorrectPriceClient(List.of(PRICE1, PRICE2, PRICE3)), queue);
+        return new PriceFacade(new BinanceTestPriceClient(List.of(PRICE1, PRICE2, PRICE3)), queue);
     }
 }

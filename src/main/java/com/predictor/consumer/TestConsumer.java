@@ -13,6 +13,4 @@ public class TestConsumer {
     public void greetingListener(PriceDto price) {
         System.out.println("Consumer: " + price);
     }
-
-
 }
